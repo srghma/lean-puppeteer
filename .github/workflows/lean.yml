@@ -1,0 +1,33 @@
+name: Lean CI
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+jobs:
+  ci-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set TEST_ARGS manually
+        run: |
+          echo "TEST_ARGS='--wfail --iofail'" >> $GITHUB_ENV
+        shell: bash
+      - uses: leanprover/lean-action@v1
+        with:
+          build-args: "--wfail --iofail"
+          test-args: "--wfail --iofail"
+          directory: "My"
+      - name: "lake exe mk_all --check --module"
+        working-directory: "My"
+        run: |
+          set -e
+          lake exe mk_all --check --module
+      - name: "checkInitImports"
+        working-directory: "My"
+        run: |
+          set -e
+          lake exe checkInitImports
+      - uses: leanprover-community/lint-style-action@main
+        with:
+          mode: check
