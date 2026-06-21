@@ -17,7 +17,7 @@ jobs:
         with:
           build-args: "--wfail --iofail"
           test-args: "--wfail --iofail"
-          directory: "My"
+          lake-package-directory: "My"
       - name: "lake exe mk_all --check --module"
         working-directory: "My"
         run: |
