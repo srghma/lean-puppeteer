@@ -1,8 +1,0 @@
-.lake/
-build/
-*.olean
-*.ilean
-*.c
-*.o
-*.hash
-*.trace
