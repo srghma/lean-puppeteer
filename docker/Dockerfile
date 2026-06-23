@@ -1,6 +1,6 @@
 FROM node:24-bookworm@sha256:8530f76a96d88820d288761f022e318970dda93d01536919fbc16076b7983e63
 # Configure default locale (important for chrome-headless-shell).
-ENV LANG=en_US.UTF-8 
+ENV LANG=en_US.UTF-8
 # UID of the non-root user 'pptruser'
 ENV PPTRUSER_UID=10042
 # Attempts to start a new DBUS session if none is present
@@ -11,8 +11,8 @@ ENV DBUS_SESSION_BUS_ADDRESS=autolaunch:
 # installs, work.
 RUN apt-get update \
     && apt-get install -y --no-install-recommends fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-khmeros \
-    fonts-kacst fonts-freefont-ttf dbus dbus-x11 
-   
+    fonts-kacst fonts-freefont-ttf dbus dbus-x11
+
 
 # Add pptruser.
 RUN groupadd -r pptruser && useradd -u $PPTRUSER_UID -rm -g pptruser -G audio,video pptruser
@@ -31,7 +31,7 @@ RUN npm i ./puppeteer-browsers-latest.tgz ./puppeteer-core-latest.tgz ./puppetee
 # Install system dependencies as root.
 USER root
 # Overriding the cache directory to install the deps for the Chrome
-# version installed for pptruser. 
+# version installed for pptruser.
 RUN PUPPETEER_CACHE_DIR=/home/pptruser/.cache/puppeteer \
     npx puppeteer browsers install chrome --install-deps \
      && apt-get clean \
